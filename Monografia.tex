@@ -1,0 +1,536 @@
+% Essa é a minha variação do ABNTEX com mudanças pra UFPR.
+%
+% Sinceramente, não faço mais idéia da onde veio o original,
+% sei que um vem com o ABNTEX mas eu não peguei de lá e achei
+% um já modificado em algum lugar por um cara do curso de Direito.
+%
+% De qualquer forma, a minha monografia foi aprovada com nota máxima
+% e sem qualquer correção de estilo e formatação das regras, e
+% sei que já usaram uma praticamente idêntica na UFPR antes.
+
+% Numeração de acordo com UFPR
+\documentclass[pnumromarab,normaltoc]{abnt}
+
+% Para inserir palavras com alfabeto grego no texto
+\usepackage[polutonikogreek,brazil]{babel}
+
+% Pra suportar acentuação direito
+
+\usepackage[latin1]{inputenc}
+\usepackage{abnt-alf}
+
+% Para inserção de imagens
+\usepackage{graphicx}
+
+% Para links web serem clicáveis
+\usepackage{url}
+\usepackage{remreset}
+\usepackage[normalem]{ulem}
+
+% Força uso da font Computer Modern
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{lmodern} % http://www.tug.dk/FontCatalogue/lmodern/
+
+% Minted para coloração de sintaxe dos códigos de programação (syntax highlighting)
+\usepackage{minted}
+
+% Estilo preferido do Minted pra Python
+\usemintedstyle{bw}
+\renewcommand{\theFancyVerbLine}{\sffamily \textcolor[rgb]{0.5,0.5,0.5}{\scriptsize \oldstylenums{\arabic{FancyVerbLine}}}}
+
+\makeatletter
+\@removefromreset{footnote}{chapter}
+\makeatother
+
+% Para que ele entenda o @
+\makeatletter
+
+% Capa da monografia
+\renewcommand{\capa} {
+\begin{titlepage}
+	\espaco{1.1}
+	
+	\begin{center}
+		\large\ABNTchapterfont\ABNTautordata
+	\end{center}
+	
+	\vspace{7.5cm}
+	
+	\begin{center}
+		\large\ABNTchapterfont\ABNTtitulodata\par
+	\end{center}
+	
+	\vfill
+	
+	\begin{center}
+		\textbf{\ABNTlocaldata}\par
+		\textbf{\ABNTdatadata}
+	\end{center}
+\end{titlepage}
+}
+
+% Folha de rosto
+\newcommand{\esporient}[2] {
+	\leftskip 0em
+	\@tempdima 5.5em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{#1#2\hfil}
+}
+
+\newcommand{\espcoorient}[2] {
+	\leftskip 0em
+	\@tempdima 7em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{#1#2\hfil}
+}
+
+\renewcommand{\folhaderosto} {
+\begin{titlepage}
+	\espaco{1.1}
+	
+	\begin{center}
+		\large\ABNTchapterfont\ABNTautordata
+	\end{center}
+	
+	\vspace{7.5cm}
+	
+	\begin{center}
+		\large\ABNTchapterfont\ABNTtitulodata\par
+	\end{center}
+	
+	\vspace{2cm}
+	
+	\hspace{.35\textwidth}
+	\begin{minipage}{.5\textwidth}
+		\begin{espacosimples}
+			\ABNTcomentariodata\par
+		\end{espacosimples}
+	\end{minipage}
+	
+	\hspace{.35\textwidth}
+	\begin{minipage}{.5\textwidth}
+		\begin{espacosimples}
+			\esporient{\numberline {Orientador:}}{\ignorespaces\ABNTorientadordata}
+		\end{espacosimples}
+	\end{minipage}
+	
+	\ABNTifnotempty{\ABNTcoorientadordata}{
+		\hspace{.35\textwidth}
+		\begin{minipage}{.5\textwidth}
+			\begin{espacosimples}
+				\espcoorient{\numberline {Co-Orientador:}}{\ignorespaces\ABNTcoorientadordata}
+			\end{espacosimples}
+		\end{minipage}}
+	
+	\vfill
+	
+	\begin{center}
+		\textbf{\ABNTlocaldata}\par
+		\textbf{\ABNTdatadata}
+	\end{center}
+
+\end{titlepage}
+}
+
+% Altera o tamanho das fontes dos capítulos e dos apêndices
+\renewcommand{\ABNTchapterfont}{\bfseries}
+\renewcommand{\ABNTchaptersize}{\Large}
+\renewcommand{\ABNTanapsize}{\Large}
+
+% Altera o espaçamento entre dots
+\renewcommand\@dotsep{2}
+
+% Altera forma de montagem do TOC
+\renewcommand\l@chapter[2]{
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \ifthenelse{\boolean{ABNTpagenumstyle}}
+        {\renewcommand{\@pnumwidth}{3.5em}}
+        {}
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \normalsize\ABNTtocchapterfont
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\dotfill \nobreak%
+      \ifthenelse{\boolean{ABNTpagenumstyle}}
+         {%
+          \hb@xt@\@pnumwidth{\hss 
+            \ifthenelse{\not\equal{#2}{}}{{\normalfont p.\thinspace#2}}{}}\par
+         }
+         {%
+          \hb@xt@\@pnumwidth{\hss #2}\par
+         }
+      \penalty\@highpenalty
+    \endgroup
+  \fi
+}
+
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{2.3em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{0em}{3.2em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{0em}{4.1em}}
+
+% Cria um comando auxiliar para montagem da lista de figuras
+\newcommand{\figfillnum}[1]{%
+  {\hspace{1em}\normalfont\dotfill}\nobreak
+  \hb@xt@\@pnumwidth{\hfil\normalfont #1}{}\par}
+
+% Cria um comando auxiliar para montagem da lista de tabelas
+\newcommand{\tabfillnum}[1]{%
+	{\hspace{1em}\normalfont\dotfill}\nobreak
+	\hb@xt@\@pnumwidth{\hfil\normalfont #1}{}\par}
+
+% Altera a forma de montagem da lista de figuras
+\renewcommand*{\l@figure}[2]{
+	\leftskip 3.1em
+	\rightskip 1.6em
+	\parfillskip -\rightskip
+	\parindent 0em
+	\@tempdima 2.0em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{Figura \normalfont #1}\nobreak \figfillnum{#2}}
+
+% Altera a forma de montagem de lista de tabelas
+\renewcommand*{\l@table}[2]{
+	\leftskip 3.4em
+	\rightskip 1.6em
+	\parfillskip -\rightskip
+	\parindent 0em
+	\@tempdima 2.0em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{Tabela \normalfont #1}\nobreak \tabfillnum{#2}}
+
+% Define os comandos que montam a lista de símbolos
+\newcommand{\listadesimbolos}{\pretextualchapter{Lista de Símbolos}\@starttoc{lsb}}
+\newcommand{\simbolo}[2]{{\addcontentsline{lsb}{simbolo}{\numberline{#1}{#2}}}#1}
+\newcommand{\l@simbolo}[2]{
+	\vspace{-0.75cm}
+	\leftskip 0em
+	\parindent 0em
+	\@tempdima 5em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{\normalfont #1}\hfil\nobreak\par}
+
+% Define o comando que monta a lista de siglas
+\newcommand{\listadesiglas}{\pretextualchapter{Lista de Siglas}\@starttoc{lsg}}
+\newcommand{\sigla}[2]{{\addcontentsline{lsg}{sigla}{\numberline{#1}{#2}}}#1}
+\newcommand{\l@sigla}[2]{
+	\vspace{-0.75cm}
+	\leftskip 0em
+	\parindent 0em
+	\@tempdima 5em
+	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+	{\normalfont #1}\hfil\nobreak\par}
+
+% Define o tipo de numeração das páginas
+\renewcommand{\chaptertitlepagestyle}{plain}
+
+% Altera a posição da numeração de páginas dos elementos pré-textuais
+\renewcommand\pretextualchapter{
+	\if@openright\cleardoublepage\else\clearpage\fi
+	\pagestyle{\chaptertitlepagestyle}
+	\global\@topnum\z@
+	\@afterindentfalse
+	\@schapter}
+
+% Altera a posição da numeração de páginas dos elementos textuais
+\renewcommand{\ABNTchaptermark}[1]{
+	\ifthenelse{\boolean{ABNTNextOutOfTOC}}
+		{\markboth{\ABNTnextmark}{\ABNTnextmark}}
+		{\chaptermark{#1}
+		\pagestyle{\chaptertitlepagestyle}}}
+
+% Redefine o tipo de numeração das páginas
+\renewcommand{\ABNTBeginOfTextualPart}{
+	\renewcommand{\chaptertitlepagestyle}{plainheader}
+	\renewcommand{\thepage}{\arabic{page}}
+	\setcounter{page}{1}}
+
+\makeatother
+
+% Altera o tamanho do parágrafo
+\setlength{\parindent}{1.5cm}
+
+% Início do documento
+\begin{document}
+
+\autor{SEU SUPER NOME AQUI}
+\titulo{A MALDIÇÃO DOS TÍTULOS DE TRÊS LINHAS EM MONOGRAFIAS DE GRADUAÇÃO: PANORAMA HISTÓRICO, CRÍTICAS E PROPOSTAS}
+
+\orientador{Nome do seu orientador}
+
+% Se tiver co-orientador, descomente a linha abaixo
+%\coorientador{Co-orientador 1\protect\\Co-orientador 2}
+
+\comentario{Monografia apresentada à disciplina Orientação Monográfica XYZ como requisito parcial para obtenção do título de Bacharel em XYZ, com ênfase em XYZ, do Setor de XYZ, Universidade XYZ.}
+
+\local{CIDADE}
+
+\data{2012}
+
+\capa
+
+\folhaderosto
+
+% Termo de aprovação, após defesa da monografia
+\begin{titlepage}
+	\espaco{1.1}
+	
+	\begin{center}
+		\Large\textbf{{Termo de Aprovação}}
+	\end{center}
+	
+	\vspace{0.75cm}
+	
+	\begin{center}
+		\large\ABNTautordata
+	\end{center}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\large\ABNTtitulodata
+	\end{center}
+	
+	\vspace{1cm}
+	
+	\noindent Monografia aprovada como requisito parcial para obtenção do título de Bacharel em XYZ, com ênfase em XYZ, do Setor de XYZ, Universidade XYZ, pela seguinte banca examinadora:
+	
+	\setlength{\ABNTsignthickness}{0.4pt}
+	\setlength{\ABNTsignskip}{2cm}
+	
+	\vspace{-0.5cm}
+	\assinatura{Prof. Dr. Fulano\\Universidade XYZ}
+	
+	\vspace{-0.5cm}
+	\assinatura{Prof. Dr. Beltrano\\Universidade XYZ} 
+	
+	\vfill
+	
+	\begin{center}
+		Cidade, 2012
+	\end{center}
+
+\end{titlepage}
+
+% Deve ser adicionado ao contador de páginas um, referente a folha de rosto.
+% A folha de aprovação não recebe número, nem é contada.
+\addtocounter{page}{1}
+
+\pretextualchapter{Dedicatória}
+
+\vspace{12cm}
+\hspace{.3\textwidth}
+\begin{minipage}{.6\textwidth}
+	\par A quem eu dedico,
+	\par $\phantom{linha em branco}$
+	\par Eu, mim e moi.
+\end{minipage}
+
+\newpage
+
+\pretextualchapter{Agradecimentos}
+
+\vspace{12cm}
+\hspace{.2 \textwidth}
+\begin{minipage}{.7\textwidth}
+	\par Primeira linha dos agradecimentos.
+	\par $\phantom{linha em branco}$
+	\par Se precisar, uma segunda linha para mais agradecimentos, afinal você vaza gratidão e quer bajular o maior número possível de professores.
+\end{minipage}
+
+\pretextualchapter{Epígrafe}
+
+\vspace*{12cm}
+\hspace{.3\textwidth}
+\begin{minipage}{.6\textwidth}
+	\par --- What's your name?
+	\par --- Fuck you! That's my name.
+	\par $\phantom{linha em branco}$
+	\par Alec Baldwin, em ``Sucesso a Qualquer Preço''
+\end{minipage}
+
+\sumario
+
+% A ordem das listas importa
+
+% Lista de Figuras
+\listadefiguras
+
+% Lista de Tabelas
+\listadetabelas
+
+% Lista de Siglas, e.g. \sigla{sigla}{Descrição}
+\listadesiglas
+
+% Lista de Símbolos, e.g. \simbolo{símbolo}{Descrição}
+\listadesimbolos
+
+% Resumo
+\begin{resumo}
+	$\phantom{linha em branco}$\\
+	Breve resumo em português claro, objetivo e com não mais que 500 palavras.\\
+	$\phantom{linha em branco}$\\
+	Palavras-chave: Linguística Aplicada; PLN; Linguística de Corpus; Latim Clássico; Cícero; Python; NLTK.
+\end{resumo}
+
+% Abstract
+\begin{abstract}
+	$\phantom{linha em branco}$\\
+	Igual ao resumo em português mas em inglês o mais claro e correto possível. Revise.\\
+	$\phantom{linha em branco}$\\
+	Keywords: Applied Linguistics; NLP; Corpus Linguistics; Classical Latin; Cicero; Python; NLTK.
+\end{abstract}
+
+% Início do conteúdo textual
+\chapter{Organização}
+
+	\par Este trabalho está dividido em tantos capítulos principais, seguidos pelas referências bibliográficas e uma série de apêndices técnicos.
+
+	\par O primeiro capítulo, \textit{Introdução}, explica a motivação por trás do trabalho, diferenças entre pesquisas similares já realizadas e quais são os objetivos em vista. O capítulo \textit{Fundamentação teórica} elenca as principais referências linguísticas do trabalho, histórico da área de pesquisa e compara métodos da linguística aplicada, com casos de uso e propostas.
+
+	\par O último capítulo, \textit{Conclusão}, fecha o trabalho com um resumo geral do que foi desenvolvido. Por fim, há uma série de apêndices deste trabalho que exemplificam todas as análises realizadas utilizando programação de computadores. Todos os códigos escritos para este trabalho estão nos apêndices e podem ser utilizados livremente.
+
+\chapter{Introdução}
+
+	\par Blábláblá, este trabalho se baseará no projeto \sigla{NLTK}{Natural Language Toolkit} (Natural Language Toolkit), que consiste em um conjunto de rotinas de programação de computador, em forma de kit de ferramentas\footnote{A descrição pode soar estranha em português e para não iniciados em programação; em bibliografias de computação ambos os termos aparecem simplesmente como \sigla{API}{Application Programming Interface} e toolkit, em inglês.}, para processamento de linguagem natural. Com a ajuda do NLTK e à luz da Linguística de Corpus (\sigla{LC}{Linguística de Corpus}) procurarei evidenciar os usos mais comuns do latim clássico por Cícero e irei sugerir uma abordagem para blábláblá, afinal ele foi um ``supremo manipulador dos corações alheios'' e ``quase um pioneiro e inventor da eloquência'' \cite{abney}.
+
+	\par Mais blá, porque Cícero é um dos autores que mais representam o período clássico do latim --- tanto pela grande produção e variedade de estilos de seus textos quanto pelos seus discursos ---, e devido a sua importância após a Renascença o blábláblá aumentou \cite{crawford, francais}.
+
+\section{Motivação}
+
+	\par Este trabalho, obviamente, não tentará esgotar as análises linguísticas que se pode fazer em \textit{corpora} em latim. E isso foi só uma desculpa pra mostrar algum termo em itálico, segundo \citeonline{bird}.
+
+	\par Ajuda a entender isto algumas passagens em um de seus textos mais conhecidos: \textit{De Oratore}. Podemos ver a preocupação de Cícero com o modo rústico de se expressar de alguns romanos --- tanto no sotaque falado quanto nas palavras grosseiras utilizadas por alguns ---, como isso afetava a latinidade deles, segundo Cícero, e como isso devia ser expurgado da língua\footnote{\textit{De Oratore}, livro 3, parágrafo 42.}. É particularmente interessante o trecho em que Cícero destaca a importância de ser claro em um discurso, a necessidade de se evitar ambiguidades e conseguir passar o sentido literal do que se tem em mente empregando o uso exato de palavras\footnote{\textit{De Oratore}, livro 3, parágrafo 49.}. É nesse texto que Cícero nos dá embasamento para este trabalho: segundo ele, ao resumir os bons valores de oratória, um orador precisa ter cultura abrangente, que de uma forma ou de outra se mostra em seu texto ou discurso pela riqueza de seu vocabulário, pois não é possível esgotar todos os temas com um universo lexical reduzido\footnote{\textit{De Oratore}, livro 3, a partir do parágrafo 74.}.
+
+\section{Objetivos}
+
+	\par Warp portal! Dessa maneira, poderemos encontrar respostas para perguntas que não são facilmente comprováveis sem métodos como os propostos neste trabalho, como:
+
+\begin{enumerate}
+\item problema um, será?
+\item fusão à frio é um mito ou fato?
+\item vi ou emacs?
+\end{enumerate}
+
+	\par Se quiser citar algo mais longo, se liga. A força que instiga este trabalho ao desenvolvimento de LC e análise lexical do latim clássico é muito bem explicada pelo meu pênis, que também acreditava que \begin{citacao}``[...] o vocabulário é um índice bastante sensível da cultura de um povo, e mudanças de significado, perda de palavras, a criação e o empréstimo de novas outras são todos fatos dependentes das histórias de suas próprias culturas. Línguas diferem grandemente pela natureza de seus vocabulários. Distinções que parecem inevitáveis para nós podem ser solenemente ignoradas em línguas que refletem um tipo de cultura totalmente diferente, ao passo que elas podem também insistir em distinções que são incompreensíveis para nós. Tais diferenças de vocabulário vão muito além de nomes de objetos como a ponta de uma flecha, uma armadura ou canhoneira. Elas se aplicam também ao mundo mental''.\end{citacao}
+	
+	\par Mentira, foi o Sapir que disse isso.
+
+\chapter{Fundamentação teórica}
+
+\section{Seção}
+
+	\par Unicórnios existem \cite{guido,langlog}.
+	
+\subsection{Sub-seção}
+
+	\par \citeonline{schinke} mandaram muito bem no ''stemming algorithm''.
+
+\chapter{Metodologia}
+
+	\par Enrolação a seguir, professor.
+
+\section{Corpora}
+
+	\par Um texto com \textit{em dash} --- isso aqui --- pra testar. E você pode linkar o Google também, manolo! URL clicável: \url{http://github.com/caio1982/} para uso.
+
+\subsection{Especificação}
+
+	\par Além de embutir códigos anexos, rola embutir no texto um trecho menor, feito à mão mesmo:
+	
+\begin{minted}[linenos=true,frame=single,fontsize=\scriptsize,fontshape=it]{python}
+>>> from nltk.corpus import cicero
+>>> print cicero.categories()
+['letter', 'other', 'philosophy', 'poetry', 'rhetoric', 'speech', 'spurious']
+\end{minted}
+
+\chapter{Análises}
+
+\section{Stopwords}
+
+	\par Um gráfico serve de análise, fato. Prova:
+
+\begin{figure}[hbtp]
+\begin{center}
+\includegraphics[width=100mm]{Chart.jpg}
+\caption{Frutas em um gráfico}
+\end{center}
+\end{figure}
+
+	\par Viu?
+
+\chapter{Conclusão}
+
+	\par Este trabalho foi foda, apavorou porque foi feito em \LaTeX.
+
+% Existem ainda: abbrv, acm, alpha, amsalpha, amsplain
+\bibliographystyle{abnt-alf}	
+
+% Eu usei @book em todos os itens da bibliografia por pura preguiça e certo
+% medo de acabar perdendo tempo e fugindo até das regras da ABNT e UFPR. Em
+% teoria é preciso ajustar cada entrada de acordo com o tipo dela... e
+% pra converter acentos use o http://w2.syronex.com/jmr/latex-symbols-converter
+\bibliography{Monografia}
+
+% Início dos apêndices
+\apendice
+
+\chapter{Sugestão de léxico para estudo}
+
+\begin{table}[ht]
+\caption{Lemas mais usados por Cícero (cima pra baixo, esquerda pra direita)}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+dico & uerbum & quantus & oportet & lex & anima \\ \hline
+possum & populus & suis & auctoritas & modius & liber \\ \hline
+uideo & uita & ciuis & quaero & ars & exercitus \\ \hline
+homo & animus & suo & facilis & arbitror & reliquus \\ \hline
+facio & tuus & suus & prouincia & quin & praetor \\ \hline
+causa & scribo & sententia & studium & genus & honor \\ \hline
+habeo & multus & semper & loco & uirus & diligo \\ \hline
+uolo & lego & nullus & intellego & plus & bene \\ \hline
+iudex & consilium & ceterus & corpus & periculum & bellum \\ \hline
+tantus & ius & saepe & dignitas & optimus & sentio \\ \hline
+bonus & oratio & maior & pater & soleo & domus \\ \hline
+ratio & inquam & uir & dolor & scriba & sapio \\ \hline
+primus & dies & totus & scio & opus & rego \\ \hline
+publica & gener & pars & do & dica & diu \\ \hline
+maximus & uirtus & iudicium & ago & modus & imperium \\ \hline
+tempus & pono & ueneo & necesse & proficiscor & plures \\ \hline
+littera & itaque & pecunia & audio & mors & accipio \\ \hline
+nunc & deus & minor & umquam & spes & praesertim \\ \hline
+senatus & locus & debeo & fortuna & urbs & uno \\ \hline
+uis & ciuitas & numquam & ullus & pario & malis \\ \hline
+multa & consul & fors & omnino & duo & uoluntas \\ \hline
+natura & satis & summo & orator & gratia & amicus \\ \hline
+puto & nomen & animo & salus & memoria & moueo \\ \hline
+magnus & publico & potis & utor & credo & mens \\ \hline
+alter & solus & fero & uoluptas & populor & postea \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\chapter{Códigos}
+
+\section{Código em Python externo, embutido no PDF}
+	\inputminted[linenos=true,frame=single,fontsize=\scriptsize,fontshape=it]{python}{Norvig-Ngrams.py}
+
+% Se tiver anexos pra juntar a monografia
+\anexo
+
+\chapter{Primeiro anexo}
+
+\begin{figure}[hbtp]
+\begin{center}
+\includegraphics[width=100mm]{Machine.eps}
+\caption{http://publicdomainreview.org/2012/07/09/arabic-machine-manuscript}
+\end{center}
+\end{figure}
+
+\end{document}
