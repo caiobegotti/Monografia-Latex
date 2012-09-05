@@ -5,7 +5,7 @@ Template Latex para monografias da UFPR, de acordo com normas da ABNT (na medida
 
 É um inferno formatar uma monografia, quanto mais nos padrões da ABNT, e com variações da universidade. E ainda em Latex. Então esse template serve para graduandos que são chatos com tipografia e qualidade gráfica da monografia, como eu fui.
 
-![Demo](https://github.com/caio1982/Monografia-Latex/blob/master/Monografia.gif "Demo")
+![Demo](https://raw.github.com/caio1982/Monografia-Latex/master/Monografia.gif "Demo")
 
 Como compilar
 =============
